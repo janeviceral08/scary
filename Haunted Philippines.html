@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Haunted Philippines</title>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English&family=Libre+Franklin:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080505;--bg2:#130b0b;--paper:#170e0e;--paper2:#241414;--ink:#d8cdbd;--tape:#d3262b;--blood:#e0312f;--ok:#9db38a;--bone:#ece4d2;--mut:#8f8274;--type:'Pirata One','IM Fell English',Georgia,serif;--sans:'Libre Franklin',system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--bone);font:15px/1.5 var(--sans);min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 20%,transparent 12%,#000e 85%);z-index:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--tape);outline-offset:2px}
+h1,h2,h3{font-family:var(--type);font-weight:400;margin:0;letter-spacing:.02em}
+h1{text-shadow:0 0 22px #d3262b66}
+#shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+#main{flex:1;padding:16px 16px 96px;max-width:1100px;width:100%;margin:0 auto}
+#nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#0d0a08;border-top:3px solid var(--tape);z-index:20;padding-bottom:env(safe-area-inset-bottom,0px)}
+#nav .brand,#nav .me{display:none}
+#nav button{flex:1;background:none;border:0;padding:10px 4px;color:var(--mut);font-size:12px;display:flex;flex-direction:column;align-items:center;gap:2px}
+#nav button b{font-size:20px;font-weight:400}
+#nav button.on{color:var(--tape)}
+.tape{height:32px;border-top:6px solid #8a0f12;margin:0 -16px 10px;background:linear-gradient(90deg,transparent 40px,#8a0f12 40px 46px,transparent 46px) 0 0/97px 24px repeat-x,linear-gradient(90deg,transparent 15px,#8a0f12 15px 19px,transparent 19px) 0 0/61px 16px repeat-x,linear-gradient(90deg,transparent 22px,#8a0f12 22px 29px,transparent 29px) 0 0/133px 32px repeat-x}
+.top h1{font-size:36px;line-height:1.05}
+.top p{color:var(--mut);margin:4px 0 0}
+.rankcard{display:flex;gap:12px;align-items:center;background:var(--bg2);border:1px solid #3a3027;padding:12px;margin:14px 0}
+.sig{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;border:2px solid;flex:none}
+.code{font-family:var(--type);font-size:12px;color:var(--mut)}
+.bar{height:8px;background:#000;border:1px solid #3a3027;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--tape)}
+.tags{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px}
+.tags button{flex:none;background:#2a1717;color:var(--bone);border:0;padding:5px 12px 5px 18px;font-family:var(--type);font-size:13px;clip-path:polygon(10px 0,100% 0,100% 100%,10px 100%,0 50%);opacity:.6}
+.tags button.on{opacity:1;background:var(--tape);color:#fff}
+.search{width:100%;padding:10px 12px;background:#0d0a08;border:1px solid #3a3027;margin-bottom:8px}
+.grid{display:grid;gap:18px;grid-template-columns:1fr;padding-top:12px}
+.case{position:relative;background:var(--paper);color:var(--ink);padding:16px 14px 12px;cursor:pointer;text-align:left;border:0;box-shadow:0 0 0 1px #3a1c1c,0 8px 20px #000;background-image:linear-gradient(180deg,#d3262b1a,transparent 45%)}
+.case:hover{box-shadow:0 0 0 1px #d3262b,0 0 28px #d3262b55}
+.case:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--tape),transparent)}
+.case .no{font-family:var(--type);font-size:13px;color:var(--mut)}
+.case h3{font-size:27px;line-height:1.15;margin:2px 0 2px;padding-right:96px}
+.case .area{font-size:13px;color:var(--mut)}
+.case p{margin:8px 0;font-size:14px}
+.rd{color:transparent;text-shadow:0 0 9px #e0312f;user-select:none}
+.meta{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);border-top:1px dashed #4a2a2a;padding-top:8px}
+.stamp{position:absolute;top:14px;right:10px;font-family:var(--type);font-size:15px;border:3px solid;padding:1px 8px;transform:rotate(7deg);opacity:.85;letter-spacing:1px}
+.stamp.u{color:var(--blood)}.stamp.c{color:var(--ok)}
+.sk{letter-spacing:2px}
+.btn{background:var(--tape);color:#fff;border:0;padding:11px 16px;font-weight:800;font-family:var(--sans);display:inline-block;text-decoration:none;text-align:center}
+.btn.ghost{background:none;color:var(--bone);border:1px solid #5a4e40}
+.back{background:none;border:0;color:var(--tape);padding:0 0 10px;font-family:var(--type)}
+.dgrid{display:grid;gap:18px}
+.sheet{background:var(--paper);color:var(--ink);padding:16px;border:1px solid #3a1c1c;box-shadow:0 8px 24px #000;position:relative}
+.sheet h2{font-size:36px;padding-right:100px}
+.coord{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0;font-family:var(--type)}
+.coord code{background:#ffffff12;padding:3px 8px}
+.sheet .btn.ghost{color:var(--ink);border-color:#6b5a3e}
+.vis{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px dashed #6b5a3e;font-size:14px;flex-wrap:wrap}
+.chip{font-size:11px;font-family:var(--type);border:1px solid;padding:0 6px;border-radius:2px}
+.ev{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ev button{padding:0;border:4px solid #f4efe3;background:#f4efe3;aspect-ratio:1;box-shadow:0 3px 6px #0008;transform:rotate(var(--r,0deg))}
+.ev img,.ph img{width:100%;height:100%;object-fit:cover;display:block}
+h2.sec{font-size:20px;margin:6px 0 10px;color:var(--tape)}
+.form{display:grid;gap:14px;max-width:640px}
+.form label{display:grid;gap:5px;font-family:var(--type)}
+.form input,.form select,.form textarea{padding:10px;background:#0d0a08;border:1px solid #3a3027;color:var(--bone);font-family:var(--sans);width:100%}
+.drop{border:2px dashed var(--tape);padding:22px;text-align:center;background:#ffffff08}
+.drop.over{background:#f2c23022}
+.th{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:10px}
+.th div{position:relative;aspect-ratio:1}
+.th img{width:100%;height:100%;object-fit:cover}
+.th button{position:absolute;top:2px;right:2px;background:var(--blood);border:0;color:#fff;width:24px;height:24px;border-radius:50%}
+.ladder{display:grid;gap:10px}
+.step{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid #3a3027;background:var(--bg2)}
+.step.lock{opacity:.45}
+.step.cur{border-color:var(--tape)}
+.reg{display:grid;gap:10px;grid-template-columns:repeat(3,1fr);margin:6px 0 20px}
+.reg div{background:var(--bg2);border:1px solid #3a3027;padding:10px;text-align:center}
+.reg b{font-family:var(--type);font-size:22px;font-weight:400;display:block}
+.led{background:#120a0a;color:var(--ink);overflow-x:auto;border:1px solid #3a1c1c}
+.led table{border-collapse:collapse;width:100%;min-width:620px;background-image:repeating-linear-gradient(0deg,transparent 0 35px,#d3262b22 35px 36px)}
+.led th,.led td{padding:8px 10px;text-align:left;border-bottom:1px solid #ffffff14;font-size:14px;vertical-align:top}
+.led th{font-family:var(--type);font-weight:400;border-bottom:2px solid var(--blood)}
+.empty{padding:28px;text-align:center;color:var(--mut);border:1px dashed #5a4e40}
+#viewer{position:fixed;inset:0;background:#000e;z-index:50;display:none;flex-direction:column;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+#viewer.on{display:flex}
+#viewer .img{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;position:relative}
+#viewer img{max-width:100%;max-height:100%;object-fit:contain}
+#viewer .arr{position:absolute;top:50%;background:#000a;border:0;color:#fff;font-size:28px;width:44px;height:56px;transform:translateY(-50%)}
+#viewer .cap{padding:12px 16px;background:#0d0a08;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+#gate{position:fixed;inset:0;z-index:60;background:var(--bg);display:grid;place-items:center;padding:20px}
+#gate div{max-width:380px;width:100%;text-align:center}
+#gate h1{font-size:34px;margin:14px 0 6px}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--tape);color:#111;padding:10px 16px;font-weight:600;z-index:70;display:none}
+@media(min-width:700px){.grid{grid-template-columns:repeat(2,1fr)}.ev{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){
+#shell{flex-direction:row}
+#nav{position:sticky;top:0;height:100vh;width:230px;flex-direction:column;border:0;border-right:3px solid var(--tape);padding:20px 12px;gap:4px;align-self:flex-start}
+#nav .brand{display:block;font-family:var(--type);font-size:22px;line-height:1.1;margin-bottom:18px}
+#nav .me{display:block;margin-top:auto;font-size:13px;color:var(--mut)}
+#nav button{flex:none;flex-direction:row;gap:10px;font-size:15px;padding:12px;justify-content:flex-start}
+#main{padding:24px 32px 40px}
+.tape{margin:0 -32px 18px}
+.grid{grid-template-columns:repeat(3,1fr)}
+.dgrid{grid-template-columns:1fr 1fr;align-items:start}
+}
+@media(prefers-reduced-motion:no-preference){.top h1{animation:fl 7s infinite}@keyframes fl{0%,92%,96%,100%{opacity:1}93%{opacity:.3}94%{opacity:1}95%{opacity:.55}}.stamp{animation:st .35s ease-out}@keyframes st{from{transform:rotate(7deg) scale(1.8);opacity:0}}}
+</style>
+</head>
+<body>
+<div id="gate"><div>
+<div class="tape" style="margin:0 0 20px"></div>
+<h1>Haunted Philippines</h1>
+<p style="color:var(--mut)">Choose the name the dead will know you by. Your photos will be public and credited to it.</p>
+<input id="un" class="search" maxlength="20" placeholder="Username" style="text-align:center;margin-top:12px">
+<button class="btn" id="go" style="width:100%">Enter if you dare</button>
+</div></div>
+<div id="shell"><nav id="nav"></nav><main id="main"></main></div>
+<div id="viewer"></div>
+<div id="toast"></div>
+<script>
+const RANKS=[
+{n:'Mortal',c:'HPH-MRT-001',min:0,col:'#a8a8a8',s:'◯'},
+{n:'The Curious',c:'HPH-CUR-002',min:3,col:'#e0a030',s:'◐'},
+{n:'Ghost Hunter',c:'HPH-GHT-003',min:7,col:'#e0443a',s:'◉'},
+{n:'Folk Healer',c:'HPH-FLK-004',min:12,col:'#4fb27a',s:'✚'},
+{n:'Spirit Master',c:'HPH-SPM-005',min:20,col:'#b78cff',s:'✦'}];
+const REG={L:'Luzon',V:'Visayas',M:'Mindanao'};
+const RAW=`Balete Drive|Quezon City|L|14.6170|121.0290|4|Tree-lined road where drivers report a woman in white in the back seat.
+Manila Film Center|CCP Complex, Pasay|L|14.5560|120.9840|5|Rushed in 1981; a scaffold collapse allegedly buried workers in wet cement.
+Fort Santiago|Intramuros, Manila|L|14.5953|120.9660|4|Spanish and WWII dungeons where visitors hear footsteps inside the cells.
+San Agustin Church|Intramuros, Manila|L|14.5890|120.9750|2|Oldest stone church in the country; a friar is said to still walk its halls.
+Paco Park|Ermita, Manila|L|14.5778|120.9941|3|A round cemetery turned park, with shadows seen along the walls at dusk.
+Manila North Cemetery|Sta. Cruz, Manila|L|14.6212|120.9890|4|Families live among the tombs; lights drift between mausoleums at night.
+Manila Chinese Cemetery|Manila|L|14.6275|120.9890|4|Mansion-style tombs with lights reported in the 'empty' houses.
+Malinta Tunnel|Corregidor, Cavite|L|14.3866|120.5714|5|WWII hospital tunnel; night tours report wails and shadowy soldiers.
+Hinulugang Taktak|Antipolo, Rizal|L|14.5886|121.1799|2|A waterfall said to hide a sunken church bell, with chanting heard at night.
+Mt. Makiling|Los Baños, Laguna|L|14.1360|121.1960|3|Home of the spirit Maria Makiling; hikers say they are led in circles.
+Mt. Banahaw|Quezon / Laguna|L|14.0700|121.4900|4|Holy mountain of pilgrims, healers and unexplained lights.
+UST Main Building|Sampaloc, Manila|L|14.6097|120.9894|3|Used as a WWII internment camp; students report apparitions on upper floors.
+Philippine General Hospital|Ermita, Manila|L|14.5790|120.9860|3|Staff trade stories of a wandering nurse and flickering ward lights.
+Teachers' Camp|Baguio|L|16.4128|120.6015|3|Campers speak of a woman in white and a lost teacher among the pines.
+Laperal White House|Baguio|L|16.4093|120.5960|5|Hilltop mansion with a woman and an old man seen at the windows.
+Diplomat Hotel|Dominican Hill, Baguio|L|16.3988|120.5937|5|Former seminary and hotel, abandoned; WWII-era cries are said to echo.
+Cemetery of Negativism|Camp John Hay, Baguio|L|16.4040|120.6105|3|Satirical tombstones for bad attitudes, in an oddly silent pine grove.
+Echo Valley Hanging Coffins|Sagada|L|17.0890|120.9000|4|Ancestral coffins hang from the cliff; locals ask visitors to stay quiet.
+Lumiang Burial Cave|Sagada|L|17.0640|120.9040|4|A cave stacked with coffins, some centuries old.
+Kabayan Mummy Caves|Benguet|L|16.6200|120.8330|4|Naturally preserved Ibaloi mummies resting in rock shelters.
+Bantay Church Belfry|Bantay, Ilocos Sur|L|17.5790|120.3880|3|A watchtower where a ghostly bell ringer is said to appear.
+Fort San Pedro|Cebu City|V|10.2923|123.9060|3|Oldest triangular fort in the country; guards report figures on the ramparts.
+The Ruins|Talisay, Negros Occ.|V|10.7418|122.9695|3|A burned mansion where a woman in white is seen in the ruins at night.
+Silliman Hall|Dumaguete|V|9.3100|123.3060|3|Student legends of a ghost in the old hall's corridors.
+Mt. Bandilaan|Siquijor|V|9.1992|123.5160|4|Mountain of healers and folk magic; locals say not to go alone after dark.
+Lazi Convent|Siquijor|V|9.1260|123.6290|3|Centuries-old convent with tales of unseen footsteps upstairs.
+Fort Pilar|Zamboanga City|M|6.9020|122.0730|3|Coastal fort with stories of soldiers and lingering prayers.
+Camiguin Sunken Cemetery|Camiguin|M|9.1950|124.6770|4|A cemetery submerged by a volcanic eruption, marked by a cross at sea.`;
+const PL=RAW.split('\n').map((l,i)=>{const a=l.split('|');return{id:i,no:'SITE #'+String(i+1).padStart(3,'0'),name:a[0],area:a[1],reg:a[2],lat:+a[3],lng:+a[4],th:+a[5],leg:a[6]}});
+const FU=[['nightowl_mnl',2],['kuya_ghost',3],['aling_nena',1],['bisaya_hunter',2],['ilocana_lens',4],['lakwatsera99',0],['mang_tonyo',3],['pinaygram',1]];
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+function ph(i,k,t){const h=(i*37+k*61)%360;const s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><radialGradient id="g" cx=".5" cy=".35" r=".8"><stop offset="0" stop-color="hsl(${h},25%,38%)"/><stop offset="1" stop-color="hsl(${h},30%,6%)"/></radialGradient></defs><rect width="400" height="400" fill="url(#g)"/><path d="M0 330 Q100 290 200 320 T400 300 V400 H0Z" fill="#000a"/><text x="200" y="210" fill="#fff6" font-family="serif" font-size="26" text-anchor="middle">${t}</text></svg>`;return'data:image/svg+xml,'+encodeURIComponent(s)}
+let VIS=[],vid=1;
+PL.forEach(p=>{const n=2+(p.id*7)%4;for(let k=0;k<n;k++){const u=FU[(p.id*3+k)%FU.length];const pc=1+Math.floor(rnd()*3);const d=new Date(2025,Math.floor(rnd()*12),1+Math.floor(rnd()*27),18+Math.floor(rnd()*5),Math.floor(rnd()*60));VIS.push({id:vid++,pid:p.id,user:u[0],rank:u[1],at:d.getTime(),note:'',photos:Array.from({length:pc},(_,j)=>ph(p.id,k*3+j,p.name.split(' ')[0]))})}});
+let me='',view='cases',pid=null,filter='all',q='',draft=[];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const mine=()=>VIS.filter(v=>v.user===me).sort((a,b)=>a.at-b.at);
+const visitedSet=()=>new Set(mine().map(v=>v.pid));
+const rankIdx=n=>RANKS.reduce((r,x,i)=>n>=x.min?i:r,0);
+const fmt=t=>new Date(t).toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'});
+const chip=i=>`<span class="chip" style="color:${RANKS[i].col}">${RANKS[i].s} ${RANKS[i].n}</span>`;
+const skulls=n=>'☠'.repeat(n)+'<span style="opacity:.25">'+'☠'.repeat(5-n)+'</span>';
+const maps=p=>`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+function nav(){const it=[['cases','▤','Haunts'],['submit','✚','Proof'],['progress','☠','Progress'],['ledger','✎','Ledger']];const r=RANKS[rankIdx(visitedSet().size)];
+$('#nav').innerHTML=`<div class="brand">Haunted<br>Philippines</div>`+it.map(a=>`<button data-v="${a[0]}" class="${view===a[0]||(view==='detail'&&a[0]==='cases')?'on':''}"><b>${a[1]}</b>${a[2]}</button>`).join('')+`<div class="me">${esc(me)}<br>${chip(rankIdx(visitedSet().size))}</div>`;
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.v))}
+function go(v,id){view=v;if(id!=null)pid=id;render();scrollTo(0,0)}
+function card(p){const done=visitedSet().has(p.id);const vs=VIS.filter(v=>v.pid===p.id);const ph_=vs.reduce((a,v)=>a+v.photos.length,0);const users=new Set(vs.map(v=>v.user)).size;
+let leg=esc(p.leg);if(!done){const c=Math.min(38,leg.length);leg=leg.slice(0,c)+'<span class="rd">'+leg.slice(c)+'</span>'}
+return`<button class="case" data-id="${p.id}"><span class="stamp ${done?'c':'u'}">${done?'SURVIVED':'SEALED'}</span><div class="no">${p.no} · ${REG[p.reg]}</div><h3>${esc(p.name)}</h3><div class="area">${esc(p.area)}</div><p>${leg}</p><div class="meta"><span class="sk" title="Threat level ${p.th} of 5">${skulls(p.th)}</span><span>${ph_} photos · ${users} visitors</span></div></button>`}
+function cases(){const vs=visitedSet();const n=vs.size,ri=rankIdx(n),r=RANKS[ri],nx=RANKS[ri+1];
+const list=PL.filter(p=>(filter==='all'||(filter==='done'?vs.has(p.id):filter==='open'?!vs.has(p.id):p.reg===filter))&&(p.name+p.area).toLowerCase().includes(q.toLowerCase()));
+const F=[['all','All'],['L','Luzon'],['V','Visayas'],['M','Mindanao'],['done','Survived'],['open','Sealed']];
+return`<div class="tape"></div><div class="top"><h1>Haunted Places of the Philippines</h1><p>${PL.length} cursed grounds are waiting. Go there, bring back proof, and survive the night.</p></div>
+<div class="rankcard"><div class="sig" style="color:${r.col}">${r.s}</div><div style="flex:1"><b>${r.n}</b> <span class="code">${r.c}</span><div class="bar"><i style="width:${nx?Math.min(100,(n-r.min)/(nx.min-r.min)*100):100}%"></i></div><div class="code" style="margin-top:4px">${nx?`${n} of ${nx.min} places to ${nx.n}`:'Highest rank reached'}</div></div></div>
+<input class="search" id="q" placeholder="Search the cursed grounds" value="${esc(q)}"><div class="tags">${F.map(f=>`<button data-f="${f[0]}" class="${filter===f[0]?'on':''}">${f[1]}</button>`).join('')}</div>
+<div class="grid">${list.map(card).join('')||'<div class="empty">Nothing here. Clear the search or change the filter.</div>'}</div>`}
+function detail(){const p=PL[pid];const done=visitedSet().has(p.id);const vs=VIS.filter(v=>v.pid===p.id).sort((a,b)=>b.at-a.at);
+return`<button class="back" id="bk">‹ Back to the haunts</button><div class="dgrid"><div class="sheet"><span class="stamp ${done?'c':'u'}">${done?'SURVIVED':'SEALED'}</span><div class="code">${p.no} · ${REG[p.reg]}</div><h2>${esc(p.name)}</h2><div>${esc(p.area)} · <span class="sk">${skulls(p.th)}</span></div>
+<h3 style="margin:14px 0 4px">The legend</h3><p style="margin:0">${esc(p.leg)}</p>
+<div class="coord"><code>${p.lat.toFixed(4)}, ${p.lng.toFixed(4)}</code><button class="btn ghost" id="cp">Copy</button></div>
+<a class="btn" href="${maps(p)}" target="_blank" rel="noopener">Open in Google Maps</a> <button class="btn ghost" id="sub">Submit proof</button>
+<h3 style="margin:18px 0 4px">Those who entered</h3>${vs.map(v=>`<div class="vis"><b>${esc(v.user)}</b>${chip(v.rank)}<span style="color:var(--mut)">${fmt(v.at)}</span></div>`).join('')}</div>
+<div><h2 class="sec">Proof from the dark · ${vs.reduce((a,v)=>a+v.photos.length,0)} photos</h2><div class="ev">${vs.flatMap(v=>v.photos.map((u,j)=>[v,j])).map(([v,j],i)=>`<button data-vi="${v.id}" data-j="${j}" style="--r:${(i%5-2)*1.2}deg"><img src="${u}" alt="Evidence from ${esc(p.name)} by ${esc(v.user)}"></button>`).join('')}</div></div></div>`}
+function submit(){return`<div class="tape"></div><div class="top"><h1>Submit proof</h1><p>Attach every photo you took. They go public on that place's wall of proof.</p></div><div class="form" style="margin-top:16px">
+<label>Place<select id="sp">${PL.map(p=>`<option value="${p.id}" ${p.id===pid?'selected':''}>${p.no} · ${esc(p.name)}</option>`).join('')}</select></label>
+<div class="drop" id="dz">Drag photos here or <button class="btn" id="pick" style="margin-left:6px">Choose photos</button><input type="file" id="fi" accept="image/*" multiple hidden><div class="th" id="th"></div></div>
+<label>Date and time of visit<input type="datetime-local" id="sd"></label>
+<label>Note (optional)<textarea id="sn" rows="3" maxlength="300"></textarea></label>
+<button class="btn" id="sb">Submit proof</button></div>`}
+function progress(){const vs=visitedSet(),n=vs.size,ri=rankIdx(n);
+const reg=Object.keys(REG).map(k=>{const t=PL.filter(p=>p.reg===k);return`<div><b>${t.filter(p=>vs.has(p.id)).length}/${t.length}</b>${REG[k]}</div>`}).join('');
+return`<div class="tape"></div><div class="top"><h1>Progress</h1><p>${n} of ${PL.length} places survived.</p></div><h2 class="sec" style="margin-top:16px">By region</h2><div class="reg">${reg}</div><h2 class="sec">Rank ladder</h2><div class="ladder">${RANKS.map((r,i)=>`<div class="step ${i>ri?'lock':''} ${i===ri?'cur':''}"><div class="sig" style="color:${r.col}">${i>ri?'🔒':r.s}</div><div><b>${r.n}</b><div class="code">${r.c} · ${r.min} places</div></div></div>`).join('')}</div>`}
+function ledger(){const m=mine().reverse();
+return`<div class="tape"></div><div class="top"><h1>Ledger</h1><p>Every place you've entered.</p></div><div style="margin-top:16px">${m.length?`<div class="led"><table><tr><th>Site</th><th>Place</th><th>Date and time</th><th>Photos</th><th>Points</th><th>Rank then</th></tr>${m.map(v=>{const p=PL[v.pid];return`<tr><td>${p.no}</td><td>${esc(p.name)}</td><td>${fmt(v.at)}</td><td>${v.photos.length}</td><td>+${p.th*10}</td><td>${RANKS[v.rank].n}</td></tr>`}).join('')}</table></div>`:'<div class="empty">You haven't entered any haunt yet. Submit your first photos to start your ledger.</div>'}</div>`}
+function render(){nav();const m=$('#main');m.innerHTML={cases,detail,submit,progress,ledger}[view]();
+if(view==='cases'){m.querySelectorAll('.case').forEach(b=>b.onclick=()=>go('detail',+b.dataset.id));m.querySelectorAll('.tags button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;render()});const s=$('#q');s.oninput=()=>{q=s.value;const pos=s.selectionStart;render();const n=$('#q');n.focus();n.setSelectionRange(pos,pos)}}
+if(view==='detail'){$('#bk').onclick=()=>go('cases');$('#sub').onclick=()=>go('submit');$('#cp').onclick=()=>{const p=PL[pid];try{navigator.clipboard.writeText(p.lat+', '+p.lng)}catch(e){}toast('Coordinates copied')};m.querySelectorAll('.ev button').forEach(b=>b.onclick=()=>open_(+b.dataset.vi,+b.dataset.j))}
+if(view==='submit')bindSubmit()}
+function bindSubmit(){draft=[];const fi=$('#fi'),dz=$('#dz');const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());$('#sd').value=d.toISOString().slice(0,16);
+const draw=()=>{$('#th').innerHTML=draft.map((u,i)=>`<div><img src="${u}" alt="Selected photo ${i+1}"><button data-i="${i}" aria-label="Remove photo">×</button></div>`).join('');document.querySelectorAll('#th button').forEach(b=>b.onclick=()=>{draft.splice(+b.dataset.i,1);draw()})};
+const add=fs=>[...fs].filter(f=>f.type.startsWith('image/')).forEach(f=>{const r=new FileReader();r.onload=()=>{draft.push(r.result);draw()};r.readAsDataURL(f)});
+$('#pick').onclick=()=>fi.click();fi.onchange=()=>{add(fi.files);fi.value=''};
+dz.ondragover=e=>{e.preventDefault();dz.classList.add('over')};dz.ondragleave=()=>dz.classList.remove('over');dz.ondrop=e=>{e.preventDefault();dz.classList.remove('over');add(e.dataTransfer.files)};
+$('#sb').onclick=()=>{if(!draft.length)return toast('Attach at least one photo');const at=new Date($('#sd').value).getTime();if(!at)return toast('Set the date and time of your visit');
+const id=+$('#sp').value,n=visitedSet().size;VIS.push({id:vid++,pid:id,user:me,rank:rankIdx(n),at,note:$('#sn').value,photos:draft.slice()});toast(`You survived: ${PL[id].name}`);go('detail',id)}}
+let cur=[],ci=0;
+function open_(v,j){const p=PL[pid];cur=VIS.filter(x=>x.pid===pid).sort((a,b)=>b.at-a.at).flatMap(x=>x.photos.map((u,k)=>({x,u,k})));ci=cur.findIndex(c=>c.x.id===v&&c.k===j);showV()}
+function showV(){const c=cur[ci],p=PL[c.x.pid],V=$('#viewer');V.className='on';
+V.innerHTML=`<div class="cap"><b>${p.no} · ${esc(p.name)}</b><button class="btn ghost" id="vx">Close</button></div><div class="img"><img src="${c.u}" alt="Photo by ${esc(c.x.user)}"><button class="arr" style="left:0" id="vp" aria-label="Previous">‹</button><button class="arr" style="right:0" id="vn" aria-label="Next">›</button></div><div class="cap"><div><b>${esc(c.x.user)}</b> ${chip(c.x.rank)}<div class="code">${fmt(c.x.at)} · ${ci+1} of ${cur.length}</div></div><a class="btn" href="${maps(p)}" target="_blank" rel="noopener">Open in Google Maps</a></div>`;
+$('#vx').onclick=()=>V.className='';$('#vp').onclick=()=>step(-1);$('#vn').onclick=()=>step(1);
+let sx=0;const im=V.querySelector('.img');im.ontouchstart=e=>sx=e.touches[0].clientX;im.ontouchend=e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)step(d<0?1:-1)}}
+function step(d){ci=(ci+d+cur.length)%cur.length;showV()}
+addEventListener('keydown',e=>{if(!$('#viewer').classList.contains('on'))return;if(e.key==='Escape')$('#viewer').className='';if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+function start(){const u=$('#un').value.trim().replace(/\s+/g,'_');if(!u)return $('#un').focus();me=u;try{localStorage.setItem('hph_user',u)}catch(e){}$('#gate').style.display='none';render()}
+$('#go').onclick=start;$('#un').onkeydown=e=>{if(e.key==='Enter')start()};
+try{const s=localStorage.getItem('hph_user');if(s)$('#un').value=s}catch(e){}
+</script>
+</body>
+</html>
